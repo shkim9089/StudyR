@@ -63,3 +63,36 @@ sum(G[G>5])
 condi<- G>4 & G<8
 condi
 G[condi]
+
+##R 카페의 매출액 분석
+espresso<-c(4,5,3,6,5,4,7)
+americano<-c(63,68,64,58,72,89,94)
+latte<-c(61,70,59,71,71,92,88)
+
+price<-c(2000,2500,3000)
+names(price)<-c('esp','ame','lat')
+price
+
+sale.espresso<-price['esp']*espresso
+sale.espresso
+
+sale.americano<-2500*americano
+sale.americano
+sale.latte<-3000*latte
+sale.latte
+
+sales.day<-sale.espresso+sale.americano+sale.latte
+names(sales.day)<-c('Mon','Tue','Wed','Thu','Fri','Sat','Sun')
+sales.day
+
+
+sum(sales.day)
+cat('총매출액',sum(sales.day),'원')
+
+sales.mean<-mean(sales.day)
+sales.mean
+cat('평균출액은',sales.mean,'입니다')
+
+result<-names(sales.day[sales.day >= sales.mean])
+
+cat('평균매출액보다 매출액이 높은 요일은',result,'입니다')
