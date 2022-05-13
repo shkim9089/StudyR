@@ -1,70 +1,94 @@
-#팩터와 리스트
-
-bt<-c('A','B','B','O','AB','A')
+## 팩터와 리스트
+bt <- c('A','B','B','O','AB','A')
 bt
-bt.new<-factor(bt)
+bt.new <- factor(bt)
 bt.new
 bt[5]
-bt.new[7]
+bt.new[6]
 levels(bt.new)
 as.integer(bt.new)
-bt.new[7]<-'B'
-as.integer(bt.new)
-bt.new[8]<-'C'  # 리벨에 없어서 NA
+
+levels(bt.new)[4]
+
+bt.new[7] <- 'B'
+bt.new[8] <- 'C' # NA가 할당
+bt.new[7]
+bt.new[8]
+bt.new[9] # 값이 없음
 bt.new
 
 
-#리스트 ->파이썬에서 딕셔너리
-h.list<-c('balling','tennis','ski')
-person<-list(name='Tom',age=25,student=T,hobby=h.list)
+# 리스트
+h.list <- c('balling','tennis','ski')
+person <- list(name='Tom', age=25, student=T, hobby=h.list)
 person
-
 person[[1]]
 person[['name']]
-person$hobby
+person$name
+
 person$age
 person$student
+person$hobby
 person$hobby[1]
 
-##카페 매출 분석2
-cafe <- list(espresso = c(4, 5, 3, 6, 5, 4, 7),
-             americano = c(63, 68, 64, 68, 72, 89, 94),
-             latte = c(61, 70, 59, 71, 71, 92, 88),
-             price = c(2.0, 2.5, 3.0),
+person[[4]]
+person[[4]][2]
+
+## R카페 매출 분석 2
+cafe <- list(espresso = c(4,5,3,6,5,4,7),
+             americano = c(63,68,64,68,72,89,94),
+             latte = c(61,70,59,71,71,92,88),
+             price = c(2000, 2500, 3000),
              menu = c('espresso','americano','latte'))
 
 cafe
+
 cafe$menu <- factor(cafe$menu)
+cafe$menu
 
-names(cafe$price)<-cafe$menu
+names(cafe$price) <- cafe$menu
+cafe$price
 
-sale.espresso <- cafe$price['espresso'] * cafe$espresso
-sale.americano <- cafe$price['americano'] * cafe$americano
-sale.latte <- cafe$price['latte'] * cafe$latteo
+sale.espresso <- cafe$espresso * cafe$price[1]  
+sale.espresso <- cafe$espresso * cafe$price['espresso']
+sale.espresso
 
+sale.americano <- cafe$americano * cafe$price['americano']
+sale.americano
 
-sale.day <- sale.espresso + sale.americano + sale.latte # 요일별 매출액
-names(sale.day) <- c('Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun')
-sum(sale.day) # 총 매출액
-sale.mean <- mean(sale.day) # 평균 매출액
-names(sale.day[sale.day >= sale.mean] ) # 평균 매출액 이상인 요일 추출
+sale.latte <- cafe$latte * cafe$price['latte']
+sale.latte
 
-#월별감전사고통계
-accident<-c(31,26,42,47,50,54,70,66,43,32,32,22)
-accident
-names(accident)<-c('M1','M2','M3','M4','M5','M6',
-                   'M7','M8','M9','M10','M11','M12')
-accident
+sale.day <- sale.espresso + sale.americano + sale.latte
+sale.day
+sale.total <- sum(sale.day)
+sale.total
 
-mon<-1:12
-mon.name<-paste('M',mon,sep='')
+sale.mean.new <- mean(sale.day)
+sale.mean.new
+
+names(sale.day) <- c('Mon','Tue','Wed','Thu','Fry','Sat','Sun')
+sale.day
+
+names(sale.day[sale.day >= sale.mean.new])
+
+## 월별 감전사고 통계
+accident <- c(31,26,42,47,50,54,70,66,43,32,32,22)
+mon <- 1:12
+mon.name <- paste('M', mon, sep='')
 mon.name
-names(accident)<-mon.name
+names(accident) <- mon.name
+accident
+
 sum(accident)
 max(accident)
 min(accident)
-accident*0.9 #사고율 10%감소하면 사고수예측
-accident[accident>=50]
-mean(accident)
-accident[accident>= mean(accident)]
 
+accident - (accident * 0.1) # 사고율이 10%감소하면 사고수를 예측
+accident*0.9
+
+names(accident[accident >= 50])
+
+mean(accident)
+
+accident[accident >= mean(accident)]

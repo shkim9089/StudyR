@@ -1,98 +1,104 @@
-##벡터 산술연산
+## 벡터 심화
 
-d<-c(1,4,3,7,8)
-2*d
+## 산술연산
+d <- c(1,4,3,7,8)
+f <- 2*d
 d-5
 3*d+4
 
-
-x<-c(1,2,3,4)
-y<-c(5,6,7,8)
-x+y
-x*y
-z<-x+y
+x <- c(1,2,3,4)
+y <- c(5,6,7,8)
+x + y
+x * y
+z <- x + y
 z
 
-#t산술연산으로 간다하게 결과
-result<-deposit *(1+rate/100)^period
-result
-result[1]
-
-#벡터간 길이가 같아야함 결측값때문,문자와 숫자는 더해지지않음
-
-
-#벡터와 벡터 연산
-m<-c(x,y)
+# 벡터와 벡터 연산
+m <- c(x, y)
 m
-n<-c(y,x)
+n <- c(y, x)
 n
-p<-c(x,y,90,100)
+p <- c(m, n, 90, 100)
 p
-
-#연산 더하기,빼기 안됨
-Q1<-c(1,2,3)
-Q1
-Q2<-c('john','jane','tom')
-Q2
-Q3<-c(Q1,Q2)
-Q3
-Q4<-c(Q1,Q2,T,F)
-Q4
+q <- c(x, y, 90, 100)
+q
 
 
+# 벡터 연산 2
+v1 <- c(1,2,3)
+v2 <- c('John','Jane',
+        'Tom')
+v1
+v2
+v3 <- c(v1, v2)
+v3
+v4 <- c(v1, T, F, T, v2)
+v4
 
-#백터 사용 함수
-datas<-1:10
+## 벡터 사용 함수
+datas = 1:10
+datas
 sum(datas)
+sum(2*datas)
 length(datas)
 mean(datas)
+median(datas)
 max(datas)
 min(datas)
-sort(datas,decreasing =T)
+sort(datas)
+v3 <- sort(datas, decreasing = T)
+v3
+v2 <- sum(datas) / length(datas)
+v2
+
 var(datas)
 sd(datas)
 range(datas)
+range(v3)
 
 
-#논리 연산자
-G<-1:9
-G<=5
-G<5
-G[G>5]
-sum(G[G>5])
-condi<- G>4 & G<8
-condi
-G[condi]
+## 논리연산자
+d <- 1:9
+d
+d <= 5
+d < 5
+d[d > 5]
+sum(d > 5)
+sum(d[d > 5])
+d == 5
+condi <- d > 5 & d < 8
+d[condi]
 
-##R 카페의 매출액 분석
-espresso<-c(4,5,3,6,5,4,7)
-americano<-c(63,68,64,58,72,89,94)
-latte<-c(61,70,59,71,71,92,88)
 
-price<-c(2000,2500,3000)
-names(price)<-c('esp','ame','lat')
+## LAB R 카페 매출 분석 1
+espreso <- c(4,5,3,6,5,4,7)
+americano <- c(63,68,64,68,72,89,94)
+latte <- c(61,70,59,71,71,92,88)
+price <- c(2000, 2500, 3000)
+names(price) <- c('esp','ame','lat')
 price
 
-sale.espresso<-price['esp']*espresso
-sale.espresso
-
-sale.americano<-2500*americano
+sale.espreso <- price['esp'] * espreso
+sale.espreso
+sale.americano <- price['ame'] * americano
 sale.americano
-sale.latte<-3000*latte
+sale.latte <- price['lat'] * latte
 sale.latte
 
-sales.day<-sale.espresso+sale.americano+sale.latte
-names(sales.day)<-c('Mon','Tue','Wed','Thu','Fri','Sat','Sun')
-sales.day
+sale.day <- sale.espreso + sale.americano + sale.latte
+sale.day
+names(sale.day) <- c('Mon','Tue','Wed','Thu','Fry','Sat','Sun')
+sale.day
 
+cat('총매출액', sale.sum, '원')
+sale.sum <- sum(sale.day)
+sale.mean <- mean(sale.day)
+sale.mean
+cat('평균매출액', sale.mean, '원')
+sale.day
+result <- names(sale.day[sale.day >= sale.mean])
+cat('평균매출액보다 매출액이 높은 요일은', result)
 
-sum(sales.day)
-cat('총매출액',sum(sales.day),'원')
-
-sales.mean<-mean(sales.day)
-sales.mean
-cat('평균출액은',sales.mean,'입니다')
-
-result<-names(sales.day[sales.day >= sales.mean])
-
-cat('평균매출액보다 매출액이 높은 요일은',result,'입니다')
+cat('총매출액', sale.sum, '원')
+cat('평균매출액', sale.mean, '원')
+cat('평균매출액보다 매출액이 높은 요일은', result)
