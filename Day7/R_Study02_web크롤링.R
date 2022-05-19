@@ -1,66 +1,66 @@
-##웹 크롤링
+## 웹 크롤링
+# 1. rvest 패키지 설치
 install.packages('rvest')
 library(rvest)
 library(stringr)
 
+# 2. 보배드림 URL 검색 -> URL가져오기
+url <- 'https://www.bobaedream.co.kr/cyber/CyberCar.php?gubun=I&page=1&order=S11&view_size=70'
+usedCar <- read_html(url)
 
-#보배드림 검색- URL가져오기
-url<-'https://www.bobaedream.co.kr/cyber/CyberCar.php?gubun=I&page=1&order=S11&view_size=70'
-usedCar<-read_html(url)
-
-#HTML 소스안에 mde-cell.title 안에 차이름 확인
-carInfos<-html_nodes(usedCar,css='.mode-cell.title')
+# 3. HTML .mode-cell.title 안에 차정보 리턴
+carInfos <- html_nodes(usedCar, css='.mode-cell.title')
 carInfos
 
-##tit.ellipsis 안에 나머지 요소 제거
-cartitles<-carInfos %>% html_node('.tit.ellipsis') %>% html_text()
-cartitles
+# 4. .tit.ellipsis 안에 있는 나머지 요소를 제거
+carTitles <- carInfos %>% html_nodes('.tit.ellipsis') %>% html_text()
+carTitles
 
-#불피룡한 요소 제거
+# 5. 불필요한 요소 제거
+carTitles <- gsub('  ', '', carTitles)
+carTitles
+carTitles <- gsub("\r\n\t", '', carTitles)
+carTitles
 
-cartitles<-gsub('  ', '',cartitles)
+# 6. 연식 가져오기
+carYears <- html_nodes(usedCar, css='.mode-cell.year')
+carYears
 
-cartitles<-gsub("\r\n\t",'',cartitles)
-cartitles
+# 7. css text 있는 정보 가져오기
+carYears <- carYears %>% html_nodes('.text') %>% html_text()
+carYears <- carYears[2:length(carYears)]
+carYears
 
+# 8. 연료 정보 가져오기
+carFuels <- html_nodes(usedCar, css='.mode-cell.fuel')
+carFuels
 
-#연식 가져오기
-caryears<-html_nodes(usedCar,css='.mode-cell.year')
-caryears
+# 9. css text 정보 가져오기
+carFuels <- carFuels %>% html_nodes('.text') %>% html_text()
+carFuels <- carFuels[2:length(carFuels)]
+carFuels <- factor(carFuels)
+carFuels
 
-#css 정보 가져오기 제외
-caryears<-caryears %>% html_nodes('.text') %>% html_text()
-caryears<-caryears[2:length(caryears)]
-caryears
+# 10. 정제
+carTitles[11] <- '랜드로버 뉴 레인지로버 스포츠 3.0 SDV6'
 
-#v연료정보가져오기
-carfuels<-html_nodes(usedCar,css='.mode-cell.fuel')
-carfuels
+# 11. 합치기
+carUsed <- data.frame(carTitles, carYears, carFuels)
 
-#연료 css 정보 가져오고 제외
-carfuels<-carfuels %>% html_nodes('.text') %>% html_text()
-carfuels
-carfuels<-carfuels[2:length(carfuels)]
-carfuels<-factor(carfuels)
-carfuels
+# 12. 데이터셋
+ds <- table(carUsed$carFuels)
+ds <- data.frame(ds)
 
-cartitles[11]<-'랜드로버 뉴 레인지로버 스포츠 3.0 SUV6'
-
-#합치기
-carused<-data.frame(cartitles,caryears,carfuels)
-
-#12 데이터셋작성
-ds<-table(carused$carfuels)
-ds<-data.frame(ds)
-ds
-
-#13 차트입력
+# 13. 차트
 library(ggplot2)
 
-ggplot(ds,aes(x=Var1,y=Freq),fill=Var(1))+
-  geom_bar(stat = 'identity')+
-  ggtitle("보배드림 수입차 1페이지 연료별 차트")
-  theme(plot.title = element_text(size=25,face='bold',
-                                colour = 'steelblue'))+
-  labs(x='연료별', y='차량수')
-
+ggplot(data = ds, aes(x=Var1, y=Freq,
+                      fill=Var1)) +
+  geom_bar(stat = 'identity') +
+  ggtitle('보배드림 1페이지 외제차 연료별') +
+  theme(plot.title = 
+          element_text(size=16, 
+                       face='bold',
+                       color = 'steelblue',
+                       hjust = 0.5)) +
+  labs(x = '연료별', y = '차량수')
