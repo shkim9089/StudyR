@@ -1,4 +1,5 @@
 ## Oracle DB연동
+install.packages("RODBC")
 library(RODBC)
 
 ## DB 연결정보
@@ -11,3 +12,4 @@ sqlQuery(conn1, "SELECT * FROM EMP")
 
 # Close
 odbcClose(conn1) 
+

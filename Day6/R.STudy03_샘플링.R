@@ -111,3 +111,4 @@ agg <- aggregate(tmp[,'vote'], by=list(지역=tmp$region), length)
 agg
 yes.ratio <- agg$x / no.region
 yes.ratio
+

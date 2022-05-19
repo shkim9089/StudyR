@@ -31,6 +31,7 @@ carDetailInfo
 
 carDetailInfo <- gsub(' ', '', carDetailInfo)
 carDetailInfo <- gsub('\r\n', '', carDetailInfo)
+
 carDetailInfo <- gsub('\t', '', carDetailInfo)
 carDetailInfo
 
@@ -47,3 +48,4 @@ library(KoNLP)
 library(stringr)
 library(tm)
 library(qgraph)
+
