@@ -64,3 +64,4 @@ ggplot(data = ds, aes(x=Var1, y=Freq,
                        color = 'steelblue',
                        hjust = 0.5)) +
   labs(x = '연료별', y = '차량수')
+
