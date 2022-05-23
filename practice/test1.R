@@ -68,3 +68,22 @@ coffee$price
 h.list<-c('game','poker','eating')
 minwook<-list(name='기미눅',age=34,hobby=h.list,bestfriend='공성원')
 minwook
+
+
+laon<-matrix(1:4, nrow=2,ncol=2)
+laon[1,1]<-'이건건'
+laon[1,]
+
+
+burger <- matrix(c (514, 917, 11,
+                    533, 853, 13,
+                    566, 888, 10),
+                 nrow = 3,
+                 byrow = T)
+
+rownames(burger)<-c('M','L','B')
+burger
+colnames(burger)<-c('kcal','na','fat')
+burger
+
+burger['M','na']
