@@ -26,6 +26,7 @@ summary(z4)
 ##이차원 결측값
 iris
 
+
 iris.na<-iris
 iris.na[1,2]<-NA
 iris.na[1,3]<-NA
